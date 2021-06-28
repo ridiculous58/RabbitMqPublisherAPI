@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  oddopublisherapi:
+    #image: emirhan/publisher-api
+    build: .
+    container_name: oddopublisherapi
+    restart: always
+    depends_on:
+      - rabbitmq
+      - elasticsearch
+    ports:
+      - "3800:80"
+
+  rabbitmq: # login guest:guest
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: "rabbitmq"
+    ports:
+      - "4369:4369"
+      - "5671:5671"
+      - "5672:5672"
+      - "25672:25672"
+      - "15671:15671"
+      - "15672:15672"
+  
+  elasticsearch:
+     image: elasticsearch:7.13.2
+     container_name: elasticsearch
+     ports:
+        - "9200:9200" 
